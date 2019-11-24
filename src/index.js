@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { Details } from "./details";
 
@@ -12,32 +12,26 @@ const characters = [
   "Obi-Wan Kenobi"
 ];
 
-class App extends React.Component {
-  state = {
-    selectedCharacterId: 1,
-    anotherStateVar: 2
+const App = () => {
+  const [selectedCharacterId, setSelectedCharacterId] = useState(1);
+  const [anotherStateVar, setAnotherStateVar] = useState(2);
+
+  const selectCharacter = e => {
+    setSelectedCharacterId(e.target.value);
   };
 
-  selectCharacter = e => {
-    this.setState({ selectedCharacterId: e.target.value });
-  };
-
-  render() {
-    const { selectedCharacterId } = this.state;
-
-    return (
-      <div>
-        <select value={selectedCharacterId} onChange={this.selectCharacter}>
-          {characters.map((name, index) => (
-            <option value={index + 1} key={name}>
-              {name}
-            </option>
-          ))}
-        </select>
-        <Details id={selectedCharacterId} />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <select value={selectedCharacterId} onChange={selectCharacter}>
+        {characters.map((name, index) => (
+          <option value={index + 1} key={name}>
+            {name}
+          </option>
+        ))}
+      </select>
+      <Details id={selectedCharacterId} />
+    </div>
+  );
 }
 
 const rootElement = document.getElementById("root");
